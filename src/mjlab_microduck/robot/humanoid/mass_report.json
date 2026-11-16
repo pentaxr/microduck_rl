@@ -1,0 +1,181 @@
+{
+ "total_mass_kg": 2.07,
+ "bodies": {
+  "pelvis": {
+   "mass_kg": 0.2593
+  },
+  "hip_roll_link_L": {
+   "mass_kg": 0.0716
+  },
+  "hip_pitch_link_L": {
+   "mass_kg": 0.0745
+  },
+  "thigh_L": {
+   "mass_kg": 0.087
+  },
+  "shin_L": {
+   "mass_kg": 0.0862
+  },
+  "foot_L": {
+   "mass_kg": 0.037
+  },
+  "hip_roll_link_R": {
+   "mass_kg": 0.0716
+  },
+  "hip_pitch_link_R": {
+   "mass_kg": 0.0745
+  },
+  "thigh_R": {
+   "mass_kg": 0.087
+  },
+  "shin_R": {
+   "mass_kg": 0.0862
+  },
+  "foot_R": {
+   "mass_kg": 0.037
+  },
+  "chest": {
+   "mass_kg": 0.6248
+  },
+  "head": {
+   "mass_kg": 0.1268
+  },
+  "upper_arm_L": {
+   "mass_kg": 0.0129
+  },
+  "elbow_link_L": {
+   "mass_kg": 0.1385
+  },
+  "forearm_L": {
+   "mass_kg": 0.0217
+  },
+  "upper_arm_R": {
+   "mass_kg": 0.0129
+  },
+  "elbow_link_R": {
+   "mass_kg": 0.1385
+  },
+  "forearm_R": {
+   "mass_kg": 0.0217
+  }
+ },
+ "parts": [
+  [
+   "pelvis",
+   "pelvis",
+   84.3
+  ],
+  [
+   "hip_roll_link_L",
+   "hip_roll_link_L",
+   16.6
+  ],
+  [
+   "hip_pitch_link_L",
+   "hip_pitch_link_L",
+   19.5
+  ],
+  [
+   "thigh_L",
+   "thigh_L",
+   32.0
+  ],
+  [
+   "shin_L",
+   "shin_L",
+   31.2
+  ],
+  [
+   "foot_L",
+   "foot_L",
+   37.0
+  ],
+  [
+   "hip_roll_link_R",
+   "hip_roll_link_R",
+   16.6
+  ],
+  [
+   "hip_pitch_link_R",
+   "hip_pitch_link_R",
+   19.5
+  ],
+  [
+   "thigh_R",
+   "thigh_R",
+   32.0
+  ],
+  [
+   "shin_R",
+   "shin_R",
+   31.2
+  ],
+  [
+   "foot_R",
+   "foot_R",
+   37.0
+  ],
+  [
+   "chest",
+   "chest",
+   181.6
+  ],
+  [
+   "chest_hatch",
+   "chest",
+   13.2
+  ],
+  [
+   "head",
+   "head",
+   60.1
+  ],
+  [
+   "head_cap",
+   "head",
+   14.7
+  ],
+  [
+   "upper_arm_L",
+   "upper_arm_L",
+   12.9
+  ],
+  [
+   "elbow_link_L",
+   "elbow_link_L",
+   28.5
+  ],
+  [
+   "forearm_L",
+   "forearm_L",
+   21.7
+  ],
+  [
+   "upper_arm_R",
+   "upper_arm_R",
+   12.9
+  ],
+  [
+   "elbow_link_R",
+   "elbow_link_R",
+   28.5
+  ],
+  [
+   "forearm_R",
+   "forearm_R",
+   21.7
+  ]
+ ],
+ "mass_model": {
+  "print_density_g_cm3": 1.24,
+  "print_fill_factor": 0.6,
+  "hardware_factor": 1.08,
+  "servo_g": 55.0,
+  "compute_g": 75.0,
+  "battery_g": 130.0,
+  "lidar_g": 47.0,
+  "camera_g": 5.0,
+  "imu_g": 10.0,
+  "wiring_g": 60.0
+ }
+}

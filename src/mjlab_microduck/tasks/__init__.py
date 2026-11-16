@@ -278,3 +278,25 @@ for _task_id, _make_cfg, _kw, _rl_cfg, _robot_cfg in _BACKLASH_TASKS:
         rl_cfg=_rl_cfg,
         runner_cls=MicroduckOnPolicyRunner,
     )
+
+# ── STS3215 humanoid (18 DoF) — a separate policy family (63-D obs, 18-D action) ──
+from .humanoid_velocity_env_cfg import (
+    make_humanoid_velocity_env_cfg,
+    HumanoidRlCfg,
+)
+
+register_mjlab_task(
+    task_id="Mjlab-Velocity-Flat-Humanoid",
+    env_cfg=make_humanoid_velocity_env_cfg(),
+    play_env_cfg=make_humanoid_velocity_env_cfg(play=True),
+    rl_cfg=HumanoidRlCfg,
+    runner_cls=MicroduckOnPolicyRunner,
+)
+
+register_mjlab_task(
+    task_id="Mjlab-Velocity-Rough-Humanoid",
+    env_cfg=make_humanoid_velocity_env_cfg(rough=True),
+    play_env_cfg=make_humanoid_velocity_env_cfg(play=True, rough=True),
+    rl_cfg=HumanoidRlCfg,
+    runner_cls=MicroduckOnPolicyRunner,
+)

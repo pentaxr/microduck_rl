@@ -110,3 +110,50 @@ class BacklashEncoderBamActuatorCfg(FrictionDRBamActuatorCfg):
 
     def build(self, entity, target_ids, target_names) -> BacklashEncoderBamActuator:
         return BacklashEncoderBamActuator(self, entity, target_ids, target_names)
+
+
+class Sts3215BamActuator(FrictionDRBamActuator):
+    """FrictionDRBamActuator for the Feetech STS3215 (humanoid).
+
+    bam's ``STS3215Actuator`` is stateful where the Dynamixel models are not: the
+    firmware moves an internal goal toward the commanded one at most
+    ``max_velocity`` rad/s (``q_target_smooth``) and closes its P loop on that.
+    bam initialises the state only when replaying a log, and its mjlab backend
+    does not carry it, so ``compute`` fails on the first step. This subclass
+    keeps the state per env as an (N, J) tensor, seeds it from the measured
+    position on the first step after each reset (what the firmware does when
+    torque comes on), and hands it to bam around every ``compute``.
+    """
+
+    def initialize(self, mj_model, model, data, device) -> None:
+        super().initialize(mj_model, model, data, device)
+        self._q_smooth: torch.Tensor | None = None
+        self._seed = torch.ones(self.kp_scale.shape[0], dtype=torch.bool, device=device)
+
+    def reset(self, env_ids=None) -> None:
+        super().reset(env_ids)
+        if getattr(self, "_seed", None) is None:
+            return
+        if env_ids is None:
+            self._seed[:] = True
+        else:
+            self._seed[env_ids] = True
+
+    def compute(self, cmd: ActuatorCmd) -> torch.Tensor:
+        if self._q_smooth is None or self._q_smooth.shape != cmd.pos.shape:
+            self._q_smooth = cmd.pos.clone()
+        self._q_smooth = torch.where(self._seed[:, None], cmd.pos, self._q_smooth)
+        self._seed[:] = False
+        act = self._bam_model.actuator
+        act.q_target_smooth = self._q_smooth
+        out = super().compute(cmd)
+        self._q_smooth = act.q_target_smooth
+        return out
+
+
+@dataclass(kw_only=True)
+class Sts3215BamActuatorCfg(FrictionDRBamActuatorCfg):
+    """FrictionDRBamActuatorCfg for the stateful STS3215 firmware model."""
+
+    def build(self, entity, target_ids, target_names) -> Sts3215BamActuator:
+        return Sts3215BamActuator(self, entity, target_ids, target_names)
