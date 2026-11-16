@@ -1,5 +1,5 @@
 {
- "total_mass_kg": 2.07,
+ "total_mass_kg": 2.125,
  "bodies": {
   "pelvis": {
    "mass_kg": 0.2593
@@ -35,7 +35,7 @@
    "mass_kg": 0.037
   },
   "chest": {
-   "mass_kg": 0.6248
+   "mass_kg": 0.6798
   },
   "head": {
    "mass_kg": 0.1268
@@ -172,7 +172,7 @@
   "hardware_factor": 1.08,
   "servo_g": 55.0,
   "compute_g": 75.0,
-  "battery_g": 130.0,
+  "battery_g": 185.0,
   "lidar_g": 47.0,
   "camera_g": 5.0,
   "imu_g": 10.0,

@@ -95,9 +95,19 @@ def test_mass_model_is_plausible(model):
     assert report["total_mass_kg"] == pytest.approx(total, abs=0.01)
 
 
-def test_bam_actuator_is_the_sts3215():
-    assert _BAM_ACTUATOR_KWARGS["motor_name"] == "feetech_sts3215_7_4V"
+def test_bam_actuator_is_the_12v_sts3215_on_3s():
+    from bam.model import load_model
+
     assert _BAM_ACTUATOR_KWARGS["kp_fw"] == 32.0
+    lo, hi = _BAM_ACTUATOR_KWARGS["vin_range"]
+    assert 10.5 <= lo < hi <= 12.6  # a 3S pack: never above 12.6 V full
+    m12 = load_model(_BAM_ACTUATOR_KWARGS["json_path"])
+    m7 = load_model(motor_name="feetech_sts3215_7_4V", model="m1")
+    assert m12.actuator_name == "sts3215"
+    # Datasheet ratios the derivation claims: same no-load speed at rated volts, x30/19.5 stall.
+    assert 12.0 / m12.kt.value == pytest.approx(7.4 / m7.kt.value, rel=1e-6)
+    stall = lambda m, v: v * m.kt.value / m.R.value
+    assert stall(m12, 12.0) / stall(m7, 7.4) == pytest.approx(30.0 / 19.5, rel=1e-6)
 
 
 def test_env_cfg_wiring():

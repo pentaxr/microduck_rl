@@ -103,19 +103,31 @@ FULL_COLLISION = CollisionCfg(
     friction={r"^(left|right)_foot_collision$": (1.0,)},
 )
 
-# BAM model of the 7.4 V STS3215 (bam ships one fit, m1). Firmware P = 32 is the
-# STS3215 factory default. 2S LiPo: 8.4 V full, sagging under load.
+# BAM model of the 12 V STS3215. bam ships a fit of the 7.4 V servo only; this one is
+# DERIVED from it by datasheet ratios and not yet fitted (see the json's "_derived"
+# note) — refit with bam on the real servo. Firmware P = 32 is the factory default.
+# 3S LiPo: 12.6 V full, ~11.1 V nominal, sagging under load.
+STS3215_PARAMS_JSON = _ROBOT_DIR / "sts3215_12V_derived.json"
+BATTERY_NOMINAL_V = 11.7
 _BAM_ACTUATOR_KWARGS = dict(
-    motor_name="feetech_sts3215_7_4V",
-    model="m1",
+    json_path=str(STS3215_PARAMS_JSON),
     target_names_expr=(r"^(?!passive_).*",),
     kp_fw=32.0,
-    vin_range=(7.0, 8.4),
+    vin_range=(10.8, 12.6),
     vin_drop_gain_range=(0.0, 0.05),
-    vin_min=6.5,
+    vin_min=10.0,
     delay_min_lag=3,
     delay_max_lag=6,
 )
+
+
+def load_sts3215_model():
+    """The BAM model the policy trains against, for CPU tools (infer, the sim body)."""
+    from bam.model import load_model
+
+    return load_model(str(STS3215_PARAMS_JSON))
+
+
 actuators = Sts3215BamActuatorCfg(**_BAM_ACTUATOR_KWARGS)
 
 

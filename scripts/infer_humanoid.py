@@ -33,7 +33,9 @@ from mjlab_microduck.robot.humanoid_constants import (
     HUMANOID_JOINT_NAMES,
     HUMANOID_SCENE_XML,
     HUMANOID_STAND_Z,
+    BATTERY_NOMINAL_V,
     _BAM_ACTUATOR_KWARGS,
+    load_sts3215_model,
 )
 
 PHYSICS_DT = 0.005
@@ -65,12 +67,9 @@ def build(no_bam: bool):
     spec = mujoco.MjSpec.from_file(str(HUMANOID_SCENE_XML))
     bam_model = None
     if not no_bam:
-        from bam.model import load_model
-
-        kw = _BAM_ACTUATOR_KWARGS
-        bam_model = load_model(motor_name=kw["motor_name"], model=kw["model"])
-        bam_model.actuator.kp = kw["kp_fw"]
-        bam_model.actuator.vin = 7.8  # mid-charge 2S
+        bam_model = load_sts3215_model()
+        bam_model.actuator.kp = _BAM_ACTUATOR_KWARGS["kp_fw"]
+        bam_model.actuator.vin = BATTERY_NOMINAL_V  # mid-charge 3S
         limit = bam_model.actuator.vin * bam_model.kt.value / bam_model.R.value
         for act in spec.actuators:
             act.set_to_motor()

@@ -37,12 +37,14 @@ from mjlab_microduck.robot.humanoid_constants import (
     HUMANOID_JOINT_NAMES,
     HUMANOID_SCENE_XML,
     HUMANOID_STAND_Z,
+    BATTERY_NOMINAL_V,
     _BAM_ACTUATOR_KWARGS,
+    load_sts3215_model,
 )
 
 PROTOCOL = 1
 TIMESTEP = 0.005
-NOMINAL_VOLTS = 7.8
+NOMINAL_VOLTS = BATTERY_NOMINAL_V
 NOMINAL_TEMP_C = 35.0
 STIFF_SOLREF_FRICTION = (-5.0e4, -2.0e2)
 STIFF_SOLIMP_FRICTION = (0.99, 0.9999, 0.001, 0.5, 2.0)
@@ -55,13 +57,11 @@ def gravity_in_frame(xmat: np.ndarray) -> np.ndarray:
 
 
 class Body:
-    def __init__(self, vin: float = 7.8):
-        from bam.model import load_model
+    def __init__(self, vin: float = NOMINAL_VOLTS):
         from bam.mujoco import MujocoController
 
         spec = mujoco.MjSpec.from_file(str(HUMANOID_SCENE_XML))
-        kw = _BAM_ACTUATOR_KWARGS
-        self.bam_model = load_model(motor_name=kw["motor_name"], model=kw["model"])
+        self.bam_model = load_sts3215_model()
         self.bam_model.actuator.kp = KP_FW
         self.bam_model.actuator.vin = vin
         limit = vin * self.bam_model.kt.value / self.bam_model.R.value

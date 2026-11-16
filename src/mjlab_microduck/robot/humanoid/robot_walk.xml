@@ -4,10 +4,10 @@
   <compiler angle="radian" meshdir="assets" autolimits="true"/>
   <default>
     <default class="humanoid">
-      <joint damping="0.6" frictionloss="0.05" armature="0.028"/>
-      <!-- XML fallback PD (used with --no-bam). STS3215 @7.4 V, firmware P=32:
-           ~17 Nm/rad, back-EMF damping ~0.55 Nm s/rad, stall ~3 Nm. -->
-      <position kp="17" kv="0" forcerange="-3.0 3.0" ctrlrange="-3.2 3.2"/>
+      <joint damping="0.85" frictionloss="0.05" armature="0.028"/>
+      <!-- XML fallback PD (used with --no-bam). 12 V STS3215 on 3S (11.7 V), firmware P=32,
+           per sts3215_12V_derived.json: ~27 Nm/rad, back-EMF damping ~0.85 Nm s/rad, stall ~5 Nm. -->
+      <position kp="27" kv="0" forcerange="-5.0 5.0" ctrlrange="-3.2 3.2"/>
       <default class="visual"><geom type="mesh" contype="0" conaffinity="0" group="2" density="0"/></default>
       <default class="collision"><geom group="3" density="0"/></default>
       <default class="servo"><geom type="box" contype="0" conaffinity="0" group="1" density="0" rgba="0.1 0.1 0.12 1"/></default>
@@ -120,7 +120,7 @@
       </body>
       <body name="chest" pos="0 0 0.04255">
         <joint name="torso_yaw" type="hinge" axis="0 0 1" range="-1.04720 1.04720"/>
-        <inertial pos="-0.00490015 -4.48181e-06 0.113659" mass="0.62482" fullinertia="1.7944e-03 1.6561e-03 5.4656e-04 -1.7319e-08 7.8460e-05 1.5222e-07"/>
+        <inertial pos="-0.00345197 -4.11922e-06 0.111579" mass="0.67982" fullinertia="1.8650e-03 1.7435e-03 5.6806e-04 -2.1375e-08 1.0172e-04 1.5805e-07"/>
         <geom class="visual" mesh="chest" material="shell"/>
         <geom class="visual" mesh="chest_hatch" material="shell"/>
         <geom class="servo" name="neck_pitch_servo" pos="-0.004 0 0.19295" quat="-0.5 0.5 0.5 0.5" size="0.0227 0.0124 0.0159"/>

@@ -59,7 +59,7 @@ MASS_MODEL = {
     "servo_g": 55.0,
     # Electronics (assumed models — not chosen yet):
     "compute_g": 75.0,   # Raspberry Pi 5 class board + cooler + bus adapter
-    "battery_g": 130.0,  # 2S 2200 mAh LiPo (2S because the BAM model is the 7.4 V STS3215)
+    "battery_g": 185.0,  # 3S 2200 mAh LiPo (the servos are the 12 V STS3215)
     "lidar_g": 47.0,     # LD19 class 2D LiDAR
     "camera_g": 5.0,     # Pi Camera class module
     "imu_g": 10.0,       # IMU board in the pelvis (see IMU_POS)
@@ -269,10 +269,10 @@ def main():
     w('  <compiler angle="radian" meshdir="assets" autolimits="true"/>')
     w("  <default>")
     w('    <default class="humanoid">')
-    w('      <joint damping="0.6" frictionloss="0.05" armature="0.028"/>')
-    w("      <!-- XML fallback PD (used with --no-bam). STS3215 @7.4 V, firmware P=32:")
-    w("           ~17 Nm/rad, back-EMF damping ~0.55 Nm s/rad, stall ~3 Nm. -->")
-    w('      <position kp="17" kv="0" forcerange="-3.0 3.0" ctrlrange="-3.2 3.2"/>')
+    w('      <joint damping="0.85" frictionloss="0.05" armature="0.028"/>')
+    w("      <!-- XML fallback PD (used with --no-bam). 12 V STS3215 on 3S (11.7 V), firmware P=32,")
+    w("           per sts3215_12V_derived.json: ~27 Nm/rad, back-EMF damping ~0.85 Nm s/rad, stall ~5 Nm. -->")
+    w('      <position kp="27" kv="0" forcerange="-5.0 5.0" ctrlrange="-3.2 3.2"/>')
     w('      <default class="visual"><geom type="mesh" contype="0" conaffinity="0" group="2" density="0"/></default>')
     w('      <default class="collision"><geom group="3" density="0"/></default>')
     w('      <default class="servo"><geom type="box" contype="0" conaffinity="0" group="1" density="0" rgba="0.1 0.1 0.12 1"/></default>')

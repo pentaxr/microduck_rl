@@ -1,0 +1,11 @@
+{
+    "kt": 1.964823815595843,
+    "R": 4.574309135297743,
+    "armature": 0.02840336348682085,
+    "q_offset": -0.05116067663549731,
+    "friction_base": 0.05239296084748866,
+    "friction_viscous": 0.05908515565091076,
+    "model": "m1",
+    "actuator": "sts3215",
+    "_derived": "NOT FITTED. Scaled from bam's feetech_sts3215_7_4V/m1 by Feetech datasheet ratios: stall 30 kg.cm @12 V vs 19.5 kg.cm @7.4 V (x1.54), same no-load speed 0.222 s/60deg at rated voltage. kt scales with rated voltage, R follows from stall. armature, friction, q_offset kept from the 7.4 V fit. Replace with a bam.fit of the real 12 V servo (bam/feetech/record.py) when one is on the bench."
+}
